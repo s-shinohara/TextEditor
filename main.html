@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="PageVariable" id="count" content="1" />
+<meta name="PageVariable" id="loopMaxCount" content="5" />
+
+</head>
+<body>
+
+<form name="editor">
+<textarea id="input" rows="1" cols="5" onChange="copy"></textarea>
+</form>
+
+<div id="b">
+</div>
+
+<script>
+function copy() {
+  document.getElementById("b").value = document.getElementById("input").value;
+}
+</script>
+
+</body>
+</html>
