@@ -14,29 +14,16 @@
   
   height: 2em;
 }
- 
-.clearfix:before,
-.clearfix:after {
-  content: " ";
-  display: table;
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.clearfix {
-  *zoom: 1;
-}
   
 #bOuterbox {
+  margin: 2em 0 0;
 }
 </style>
 
 </head>
 <body>
 
-<div id="editorOuterbox" class="clearfix">
+<div id="editorOuterbox">
 <form id="editor" name="editor">
 <textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
 </form>
