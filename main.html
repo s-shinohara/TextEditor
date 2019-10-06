@@ -87,6 +87,15 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   }
   textBeingEdited.setSelectionRange(selectionStart, selectionEnd);
   textBeingEdited.focus();
+  
+  var elementStartNum;
+  var elementEndNum;
+  
+  elementStartNum = document.getElementById("startNum");
+  elementEndNum = document.getElementById("endNum");
+
+  elementStartNum.value = selectionStart;
+  elementEndNum.value = selectionEnd;
 }
   
 window.onload = function() {
@@ -113,17 +122,21 @@ window.onload = function() {
         backOrForward = "forward";
       }
       
-      element.onClick = changeSelectionRange(startOrEnd, backOrForward);
+      element.onclick = function() {
+        var soe = startOrEnd;
+        var bof = backOrForward;
+        return changeSelectionRange(soe, bof);
+      };
     }
   }
   
   if (element.id == "replace") {
-    element.onClick = function() {
+    element.onclick = function() {
       var textBeingEdited = document.getElementById("textBeingEdited");
       textBeingEdited.value = document.getElementById("replaceTo").value;
-    }
+    };
   }
-}
+}();
   
 function isStringInStringArray(str, strArray) {
   var i;
