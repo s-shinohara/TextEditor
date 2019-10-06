@@ -8,21 +8,27 @@
 form {
   background: #FFF;
   
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   
   height: 2em;
 }
+ 
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
 #bOuterbox {
-  clear: none;
 }
 </style>
 
 </head>
 <body>
 
-<form name="editor">
+<form name="editor clearfix">
 <textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
 </form>
   
