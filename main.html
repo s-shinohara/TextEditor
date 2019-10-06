@@ -30,20 +30,20 @@
   <textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
 </div>
 <div id="startOuterbox">
-  <input type="number" id="startNum">0</input>
-  <input type="button" class="setSelectionRange start back"> < </input>
-  <input type="number" id="startNumberDelta">0</input>
-  <input type="button" class="setSelectionRange start forward"> > </input>
+  <input type="number" id="startNum" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange start back" value=" < " />
+  <input type="number" id="startNumberDelta" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange start forward" value=" > " />
 </div>
 <div id="endOuterbox">
-  <input type="number" id="endNum">0</input>
-  <input type="button" class="setSelectionRange end back"> < </input>
-  <input type="number" id="endNumberDelta">0</input>
-  <input type="button" class="setSelectionRange end forward"> > </input>
+  <input type="number" id="endNum" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange end back" value=" < ">
+  <input type="number" id="endNumberDelta" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange end forward" value=" > ">
 </div>
 <div id="replaceOuterbox">
-  <div type="button" id="replace"> replace </div>
-  <div type="text" id="replaceTo" />
+  <input type="button" id="replace" value="replace" />
+  <input type="text" id="replaceTo" placeholder="hogehoge" />
 </div>
 </form>
 </div>
