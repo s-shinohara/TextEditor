@@ -26,7 +26,25 @@
 
 <div id="editorOuterbox">
 <form id="editor" name="editor">
-<textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
+<div id="inputOuterbox">
+  <textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
+</div>
+<div id="startOuterbox">
+  <input type="number" id="startNum">0</input>
+  <input type="button" class="setSelectionRange start back"> < </input>
+  <input type="number" id="startNumberDelta">0</input>
+  <input type="button" class="setSelectionRange start forward"> > </input>
+</div>
+<div id="endOuterbox">
+  <input type="number" id="endNum">0</input>
+  <input type="button" class="setSelectionRange end back"> < </input>
+  <input type="number" id="endNumberDelta">0</input>
+  <input type="button" class="setSelectionRange end forward"> > </input>
+</div>
+<div id="replaceOuterbox">
+  <div type="button" id="replace"> replace </div>
+  <div type="text" id="replaceTo" />
+</div>
 </form>
 </div>
   
@@ -40,6 +58,69 @@ function copy() {
   var elementB = document.getElementById("b");
   elementB.textContent = document.getElementById("input").value;
 }
+
+function changeSelectionRange(var startOrEnd, var backOrForward) {
+  var input = document.getElementById("input");
+  var startNumberDelta = document.getElementById("startNumberDelta");
+  var endNumberDelta = document.getElementById("endNumberDelta");
+  var selectionStart = input.selectionStart;
+  var selectionEnd = input.selectionEnd;
+  var delta;
+  
+  if (startOrEnd == "start") {
+    delta = startNumberDelta;
+  } else if (startOrEnd == "end") {
+    delta = endNumberDelta;
+  }
+  
+  if (backOrForward == "back") {
+    delta = -1 * delta;
+  }
+  
+  if (startOrEnd == "start") {
+    selectionStart = selectionStart + delta;
+    if (selectionStart < 0) selectionStart = 0;
+    if (selectionEnd < selectionStart) selectionEnd = selectionStart;
+  } else if (startOrEnd == "end") {
+    selectionEnd = selectionEnd + delta;
+    if (selectionEnd < selectionStart) selectionEnd = selectionStart;
+  }
+  input.setSelectionRange(selectionStart, selectionEnd);
+  input.focus();
+}
+  
+document.onload = function() {
+  var startOrEnd;
+  var backOrForward;
+  
+  var element;
+
+  foreach(element in document.editor) {
+    if (element.className == "setSelectionRange") {
+      if (element.className == "start") {
+        startOrEnd = "start";
+      } else if (element.className == "end") {
+        startOrEnd = "end";
+      }
+
+      if (element.className == "back") {
+        backOrForward = "back";
+      } else if (element.className == "forward") {
+        backOrForward = "forward";
+      }
+      
+      element.onClick = changeSelectionRange(startOrEnd, backOrForward);
+    }
+  }
+  
+  if (element.id == "replace") {
+    element.onClick = function() {
+      var input = document.getElementById("input");
+      input.value = document.getElementById("replaceTo").value;
+    };      
+  }
+}
+  
 </script>
 
 </body>
