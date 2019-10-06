@@ -26,8 +26,8 @@
 
 <div id="editorOuterbox">
 <form id="editor" name="editor">
-<div id="inputOuterbox">
-  <textarea id="input" rows="1" cols="5" onChange="copy()"></textarea>
+<div id="textBeingEditedOuterbox">
+  <textarea id="textBeingEdited" rows="1" cols="5" onChange="copy()"></textarea>
 </div>
 <div id="startOuterbox">
   <input type="number" id="startNum" defaultvalue="0" placeholder="0" />
@@ -56,15 +56,15 @@
 <script>
 function copy() {
   var elementB = document.getElementById("b");
-  elementB.textContent = document.getElementById("input").value;
+  elementB.textContent = document.getElementById("textBeingEdited").value;
 }
 
 function changeSelectionRange(startOrEnd, backOrForward) {
-  var input = document.getElementById("input");
+  var textBeingEdited = document.getElementById("textBeingEdited");
   var startNumberDelta = document.getElementById("startNumberDelta");
   var endNumberDelta = document.getElementById("endNumberDelta");
-  var selectionStart = input.selectionStart;
-  var selectionEnd = input.selectionEnd;
+  var selectionStart = textBeingEdited.selectionStart;
+  var selectionEnd = textBeingEdited.selectionEnd;
   var delta;
   
   if (startOrEnd == "start") {
@@ -85,8 +85,8 @@ function changeSelectionRange(startOrEnd, backOrForward) {
     selectionEnd = selectionEnd + delta;
     if (selectionEnd < selectionStart) selectionEnd = selectionStart;
   }
-  input.setSelectionRange(selectionStart, selectionEnd);
-  input.focus();
+  textBeingEdited.setSelectionRange(selectionStart, selectionEnd);
+  textBeingEdited.focus();
 }
   
 window.onload = function() {
@@ -115,8 +115,8 @@ window.onload = function() {
   
   if (element.id == "replace") {
     element.onClick = function() {
-      var input = document.getElementById("input");
-      input.value = document.getElementById("replaceTo").value;
+      var textBeingEdited = document.getElementById("textBeingEdited");
+      textBeingEdited.value = document.getElementById("replaceTo").value;
     }
   }
 }
