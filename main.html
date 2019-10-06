@@ -15,12 +15,20 @@
   height: 2em;
 }
  
+.clearfix:before,
 .clearfix:after {
   content: " ";
-  display: block;
+  display: table;
+}
+
+.clearfix:after {
   clear: both;
 }
 
+.clearfix {
+  *zoom: 1;
+}
+  
 #bOuterbox {
 }
 </style>
