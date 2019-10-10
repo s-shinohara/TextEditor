@@ -60,17 +60,17 @@ function copy() {
 }
 
 function changeSelectionRange(startOrEnd, backOrForward) {
-  var textBeingEdited = document.getElementById("textBeingEdited");
-  var startNumberDelta = document.getElementById("startNumberDelta");
-  var endNumberDelta = document.getElementById("endNumberDelta");
-  var selectionStart = textBeingEdited.selectionStart;
-  var selectionEnd = textBeingEdited.selectionEnd;
+  var elementTextBeingEdited = document.getElementById("textBeingEdited");
+  var elementStartNumberDelta = document.getElementById("startNumberDelta");
+  var elementEndNumberDelta = document.getElementById("endNumberDelta");
+  var selectionStart = elementTextBeingEdited.selectionStart;
+  var selectionEnd = elementTextBeingEdited.selectionEnd;
   var delta;
   
   if (startOrEnd == "start") {
-    delta = startNumberDelta;
+    delta = elementStartNumberDelta.value;
   } else if (startOrEnd == "end") {
-    delta = endNumberDelta;
+    delta = elementEndNumberDelta.value;
   }
   
   if (backOrForward == "back") {
@@ -85,8 +85,8 @@ function changeSelectionRange(startOrEnd, backOrForward) {
     selectionEnd = selectionEnd + delta;
     if (selectionEnd < selectionStart) selectionEnd = selectionStart;
   }
-  textBeingEdited.setSelectionRange(selectionStart, selectionEnd);
-  textBeingEdited.focus();
+  elementTextBeingEdited.setSelectionRange(selectionStart, selectionEnd);
+  elementTextBeingEdited.focus();
   
   var elementStartNum;
   var elementEndNum;
@@ -94,8 +94,8 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   elementStartNum = document.getElementById("startNum");
   elementEndNum = document.getElementById("endNum");
 
-  elementStartNum.value = selectionStart;
-  elementEndNum.value = selectionEnd;
+  elementStartNum.textContent = selectionStart;
+  elementEndNum.textContent = selectionEnd;
 }
   
 window.onload = function() {
