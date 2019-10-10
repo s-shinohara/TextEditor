@@ -98,7 +98,7 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   elementEndNum.textContent = selectionEnd;
 }
   
-window.onload = function() {
+window.onload = (function() {
   var startOrEnd;
   var backOrForward;
   
@@ -136,7 +136,7 @@ window.onload = function() {
       textBeingEdited.value = document.getElementById("replaceTo").value;
     };
   }
-}();
+})();
   
 function isStringInStringArray(str, strArray) {
   var i;
