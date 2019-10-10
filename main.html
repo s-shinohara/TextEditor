@@ -65,13 +65,15 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   var elementEndNumberDelta = document.getElementById("endNumberDelta");
   var selectionStart = elementTextBeingEdited.selectionStart;
   var selectionEnd = elementTextBeingEdited.selectionEnd;
-  var delta;
+  var delta, _delta;
   
   if (startOrEnd == "start") {
-    delta = elementStartNumberDelta.value;
+    _delta = elementStartNumberDelta.value;
   } else if (startOrEnd == "end") {
-    delta = elementEndNumberDelta.value;
+    _delta = elementEndNumberDelta.value;
   }
+
+  delta = parseInt(_delta);
   
   if (backOrForward == "back") {
     delta = -1 * delta;
@@ -94,13 +96,15 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   elementStartNum = document.getElementById("startNum");
   elementEndNum = document.getElementById("endNum");
 
-  elementStartNum.textContent = selectionStart;
-  elementEndNum.textContent = selectionEnd;
+  elementStartNum.value = selectionStart;
+  elementEndNum.value = selectionEnd;
 }
   
 window.onload = (function() {
   var startOrEnd;
   var backOrForward;
+
+  var elementTextBeingEdited = document.getElementById("textBeingEdited");
   
   var elementArray;
   var element;
@@ -125,20 +129,36 @@ window.onload = (function() {
         backOrForward = "forward";
       }
       
-      var element_onclick = function(soe, bof) {
-        changeSelectionRange(soe, bof);
-      };
-      
-      element.onclick = element_onclick(startOrEnd, backOrForward);
+      element.onclick = (function() {
+        var soe = startOrEnd;
+        var bof = backOrForward;
+        return function() {
+          changeSelectionRange(soe, bof);
+        };
+      }) ();
     }
+
+    if (element.id == "startNum") {
+      element.value = elementTextBeingEdited.selectionStart;
+    } else if (element.id == "endNum") {
+      element.value = elementTextBeingEdited.selectionEnd;
+    }
+
   }
   
-  if (element.id == "replace") {
-    element.onclick = function() {
+  document.getElementById("replace").onclick = (function() {
+    return function() {
       var textBeingEdited = document.getElementById("textBeingEdited");
-      textBeingEdited.value = document.getElementById("replaceTo").value;
+      var newText = document.getElementById("replaceTo").value;
+      var start = textBeingEdited.selectionStart;
+      var end = textBeingEdited.selectionEnd;
+
+      textBeingEdited.setRangeText(newText, start, end, "select");
+
+      copy();
     };
-  }
+  })();
+
 })();
   
 function isStringInStringArray(str, strArray) {
