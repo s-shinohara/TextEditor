@@ -125,11 +125,11 @@ window.onload = (function() {
         backOrForward = "forward";
       }
       
-      element.onclick = function() {
+      element.onclick = (function() {
         var soe = startOrEnd;
         var bof = backOrForward;
         return changeSelectionRange(soe, bof);
-      };
+      }) ();
     }
   }
   
