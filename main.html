@@ -128,7 +128,9 @@ window.onload = (function() {
       element.onclick = (function() {
         var soe = startOrEnd;
         var bof = backOrForward;
-        return changeSelectionRange(soe, bof);
+        return function() {
+          changeSelectionRange(soe, bof);
+        }
       }) ();
     }
   }
