@@ -5,6 +5,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <style>
+body {
+  margin: 0;
+}
+
 #editorOuterbox {
   width: 100%;
   background: #FFF;
@@ -12,12 +16,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  
-  height: 2em;
+}
+
+#editor {
 }
   
 #bOuterbox {
-  margin: 8em 0 0;
 }
 </style>
 
@@ -30,16 +34,16 @@
   <textarea id="textBeingEdited" rows="1" cols="5" onChange="copy()"></textarea>
 </div>
 <div id="startOuterbox">
-  <input type="number" id="startNum" defaultvalue="0" placeholder="0" />
+  <input type="number" id="startNum" size="8" defaultvalue="0" placeholder="0" />
   <input type="button" class="setSelectionRange start back" value=" < " />
-  <input type="number" id="startNumberDelta" defaultvalue="0" placeholder="0" />
+  <input type="number" id="startNumberDelta" size="8" defaultvalue="0" placeholder="0" />
   <input type="button" class="setSelectionRange start forward" value=" > " />
 </div>
 <div id="endOuterbox">
-  <input type="number" id="endNum" defaultvalue="0" placeholder="0" />
-  <input type="button" class="setSelectionRange end back" value=" < ">
-  <input type="number" id="endNumberDelta" defaultvalue="0" placeholder="0" />
-  <input type="button" class="setSelectionRange end forward" value=" > ">
+  <input type="number" id="endNum" cols="8" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange end back" value=" < " />
+  <input type="number" id="endNumberDelta" cols="8" defaultvalue="0" placeholder="0" />
+  <input type="button" class="setSelectionRange end forward" value=" > " />
 </div>
 <div id="replaceOuterbox">
   <input type="button" id="replace" value="replace" />
@@ -101,6 +105,16 @@ function changeSelectionRange(startOrEnd, backOrForward) {
 }
   
 window.onload = (function() {
+  var elementEditor;
+  var editorRect;
+  var editorBottom;
+  
+  elementEditor = document.getElementById("editor");
+  editorRect = elementEditor.getClientRects();
+  editorBottom = editorRect[0].bottom;
+  
+  document.getElementById("bOuterbox").style.margin = editorBottom.toString() + "px 0 0";
+  
   var startOrEnd;
   var backOrForward;
 
