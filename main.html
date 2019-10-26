@@ -31,7 +31,7 @@ body {
 <div id="editorOuterbox">
 <form id="editor" name="editor">
 <div id="textBeingEditedOuterbox">
-  <textarea id="textBeingEdited" rows="1" cols="5" onChange="copy()"></textarea>
+  <textarea id="textBeingEdited" rows="2" cols="10" onChange="copy()"></textarea>
 </div>
 <div id="startOuterbox">
   <input type="number" id="startNum" size="8" defaultvalue="0" placeholder="0" />
@@ -48,6 +48,7 @@ body {
 <div id="replaceOuterbox">
   <input type="button" id="replace" value="replace" />
   <input type="text" id="replaceTo" placeholder="hogehoge" />
+  <div id="stringToBeReplaced"></div>
 </div>
 </form>
 </div>
@@ -61,6 +62,13 @@ body {
 function copy() {
   var elementB = document.getElementById("b");
   elementB.textContent = document.getElementById("textBeingEdited").value;
+}
+
+function setStringToBeReplaced(string) {
+  var elementStringToBeReplaced;
+
+  elementStringToBeReplaced = document.getElementById("stringToBeReplaced");
+  elementStringToBeReplaced.textContent = string;
 }
 
 function changeSelectionRange(startOrEnd, backOrForward) {
@@ -93,6 +101,8 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   }
   elementTextBeingEdited.setSelectionRange(selectionStart, selectionEnd);
   elementTextBeingEdited.focus();
+
+  setStringToBeReplaced(elementTextBeingEdited.value.substring(selectionStart, selectionEnd));
   
   var elementStartNum;
   var elementEndNum;
@@ -103,8 +113,8 @@ function changeSelectionRange(startOrEnd, backOrForward) {
   elementStartNum.value = selectionStart;
   elementEndNum.value = selectionEnd;
 }
-  
-window.onload = (function() {
+ 
+function calculateCSS() {
   var elementEditor;
   var editorRect;
   var editorBottom;
@@ -114,6 +124,11 @@ window.onload = (function() {
   editorBottom = editorRect[0].bottom;
   
   document.getElementById("bOuterbox").style.margin = editorBottom.toString() + "px 0 0";
+}
+ 
+window.onload = (function() {
+
+  calculateCSS();
   
   var startOrEnd;
   var backOrForward;
@@ -148,6 +163,7 @@ window.onload = (function() {
         var bof = backOrForward;
         return function() {
           changeSelectionRange(soe, bof);
+          calculateCSS();
         };
       }) ();
     }
@@ -170,11 +186,19 @@ window.onload = (function() {
       textBeingEdited.setRangeText(newText, start, end, "select");
 
       copy();
+
+      setStringToBeReplaced("");
+
+      calculateCSS();
+
+      textBeingEdited.setSelectionRange(start, end);
+      textBeingEdited.focus();
+
     };
   })();
 
 })();
-  
+ 
 function isStringInStringArray(str, strArray) {
   var i;
   for (i = 0; i < strArray.length; i++) {
