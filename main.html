@@ -81,6 +81,8 @@ function loadDOM() {
 function init() {
   loadDOM();
   
+  theDOM.prototype = new Object();
+  
   theDOM.prototype.copy = (function() {
     return (function() {
       copy();
