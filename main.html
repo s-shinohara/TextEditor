@@ -35,7 +35,7 @@ body {
 <div id="editorOuterbox">
 <form id="editor" name="editor">
 <div id="textBeingEditedOuterbox">
-  <textarea id="textBeingEdited" rows="2" cols="10" onChange="copy();calculateCSS();"></textarea>
+  <textarea id="textBeingEdited" rows="2" cols="10"></textarea>
 </div>
 <div id="startOuterbox">
   <input type="number" id="startNum" size="8" defaultvalue="0" placeholder="0" />
@@ -64,15 +64,103 @@ body {
 </div>
   
 <script>
+var theDOM;
+
+function loadDOM() {
+  theDOM = new Array([
+    "rwEditor",
+    "rTextBeingEdited",
+    "rwStartNum",
+    "rwEndNum",
+    "rNewText",
+    "rwStringToBeReplaced",
+    "rwB"
+  ]);
+  
+  theDOM.rwEditor = document.getElementById("editor");
+  theDOM.rTextBeingEdited = document.getElementById("textBeingEdited").value;
+  theDOM.rwStartNum = document.getElementById("startNum");
+  theDOM.rwEndNum = document.getElementById("endNum");
+  theDOM.rNewText = document.getElementById("replaceTo").value;
+  theDOM.rwStringToBeReplaced = document.getElementById("stringToBeReplaced");
+  theDOM.rwB = document.getElementById("b");
+}
+
+function init() {
+  loadDOM();
+  
+  theDOM.prototype.copy = (function() {
+    return (function() {
+      copy();
+    });
+  }) ();
+
+  theDOM.prototype.setStringToBeReplaced = (function() {
+    return (function() {
+      setStringToBeReplaced(rTextBeingEdited.substring(rwStartNum.value, rwEndNum.value));
+    });
+  }) ();
+  
+  theDOM.prototype.calculateCSS = (function() {
+    return (function() {
+      calculateCSS();
+    });
+  }) ();
+  
+  theDOM.prototype.attachLoadDOM = (function() {
+    return (function() {
+      attachLoadDOM();
+    });
+  }) ();
+  
+} ();
+  
+function attachLoadDOM() {
+  var element;
+  var elementArray;
+  elementArray = new Array();
+    
+  var idList = ["textBeingEdited", "startNum", "startNumberDelta", "endNum", "endNumberDelta", "replaceTo"];
+  
+  for (var i = 0; i < idList.length; i++) {
+    elementArray = elementArray.push(document.getElementById(idList[i]));
+  }
+  
+  for (var i = 0; i < elementArray.length; i++) {
+    element = elementArray[i];
+
+    var onchange_;
+//    onchange_ = element.onchange;
+    
+    var obj;
+    obj = theDOM;
+    
+    if (element.id == "textBeingEdited") {
+      onchange_ = (function() {
+        return (function() {
+          element.onchange();
+          obj.copy();
+          obj.setSrtingToBeReplaced();
+          obj.calculateCSS();
+        });
+      }) ();
+    }
+    
+    element.onchange = (function() {
+      return (function() {
+        loadDOM();
+        onchange_();
+      });
+    }) ();
+  }
+}
+  
 function copy() {
-  var elementB = document.getElementById("b");
-  elementB.textContent = document.getElementById("textBeingEdited").value;
+  elementB.textContent = valueTextBeingEdited;
 }
 
 function setStringToBeReplaced(string) {
-  var elementStringToBeReplaced;
-
-  elementStringToBeReplaced = document.getElementById("stringToBeReplaced");
+  var elementTextBeingEdited = document.getElementById("textBeingEdited");
   elementStringToBeReplaced.textContent = string;
 }
 
@@ -120,19 +208,17 @@ function changeSelectionRange(startOrEnd, backOrForward) {
 }
  
 function calculateCSS() {
-  var elementEditor;
   var editorRect;
   var editorBottom;
   
-  elementEditor = document.getElementById("editor");
   editorRect = elementEditor.getClientRects();
   editorBottom = editorRect[0].bottom;
   
-  document.getElementById("bOuterbox").style.margin = editorBottom.toString() + "px 0 0";
+  elementBOuterbox.style.margin = editorBottom.toString() + "px 0 0";
 }
  
 window.onload = (function() {
-
+  
   calculateCSS();
   
   var startOrEnd;
@@ -192,7 +278,7 @@ window.onload = (function() {
 
       copy();
 
-      setStringToBeReplaced("");
+      setStringToBeReplaced();
 
       calculateCSS();
 
@@ -201,6 +287,8 @@ window.onload = (function() {
 
     };
   })();
+  
+  attachLoadDOM();
 
 })();
  
