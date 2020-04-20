@@ -113,7 +113,7 @@ function init() {
     });
   }) ();
   
-} ();
+} init();
   
 function attachLoadDOM() {
   var element;
@@ -156,7 +156,9 @@ function attachLoadDOM() {
 }
   
 function copy() {
-  elementB.textContent = valueTextBeingEdited;
+  var elementB = document.getElementById("b");
+  var elementTextBeingEdited = document.getElementById("textBeingEdited");
+  elementB.textContent = elementTextBeingEdited.value;
 }
 
 function setStringToBeReplaced(string) {
