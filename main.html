@@ -204,9 +204,11 @@ function changeSelectionRange(startOrEnd, backOrForward) {
 }
  
 function calculateCSS() {
+  var elementEditor;
   var editorRect;
   var editorBottom;
   
+  elementEditor = document.getElementById("editor");
   editorRect = elementEditor.getClientRects();
   editorBottom = editorRect[0].bottom;
   
