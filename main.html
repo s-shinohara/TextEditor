@@ -67,15 +67,7 @@ body {
 var theDOM;
 
 function loadDOM() {
-  theDOM = new Array([
-    "rwEditor",
-    "rTextBeingEdited",
-    "rwStartNum",
-    "rwEndNum",
-    "rNewText",
-    "rwStringToBeReplaced",
-    "rwB"
-  ]);
+  theDOM = new Object();
   
   theDOM.rwEditor = document.getElementById("editor");
   theDOM.rTextBeingEdited = document.getElementById("textBeingEdited").value;
