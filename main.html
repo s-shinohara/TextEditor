@@ -207,10 +207,13 @@ function calculateCSS() {
   var elementEditor;
   var editorRect;
   var editorBottom;
+  var elementBOuterbox;
   
   elementEditor = document.getElementById("editor");
   editorRect = elementEditor.getClientRects();
   editorBottom = editorRect[0].bottom;
+  
+  elementBOuterbox = document.getElementById("bOuterbox");
   
   elementBOuterbox.style.margin = editorBottom.toString() + "px 0 0";
 }
