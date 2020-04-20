@@ -122,17 +122,19 @@ function attachLoadDOM() {
   
   for (var i = 0; i < elementArray.length; i++) {
     element = elementArray[i];
-
-    var onchange_;
-//    onchange_ = element.onchange;
     
     var obj;
     obj = theDOM;
     
+    var onchangeold = eval(element.onchange.valueOf().toString());
+    
+    var onchange_;
+    
     if (element.id == "textBeingEdited") {
       onchange_ = (function() {
         return (function() {
-          element.onchange();
+          onchangeold();
+          loadDOM();
           obj.copy();
           obj.setSrtingToBeReplaced();
           obj.calculateCSS();
@@ -142,7 +144,6 @@ function attachLoadDOM() {
     
     element.onchange = (function() {
       return (function() {
-        loadDOM();
         onchange_();
       });
     }) ();
