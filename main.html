@@ -113,7 +113,7 @@ function init_variables() {
     script.innerText(source);
     var bodyTag = document.getElementsByTagName("body");
     var scriptTags = document.getElementsByTagName("script");
-    bodyTags[0].insertBefore(script, scriptTags[0]);
+    bodyTag[0].insertBefore(script, scriptTags[0]);
   }
 }
 
