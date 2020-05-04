@@ -69,46 +69,61 @@ var theDOM;
 function loadDOM() {
   theDOM = new Object();
   
-  theDOM.rwEditor = document.getElementById("editor");
-  theDOM.rTextBeingEdited = document.getElementById("textBeingEdited").value;
-  theDOM.rwStartNum = document.getElementById("startNum");
-  theDOM.rwEndNum = document.getElementById("endNum");
-  theDOM.rNewText = document.getElementById("replaceTo").value;
-  theDOM.rwStringToBeReplaced = document.getElementById("stringToBeReplaced");
-  theDOM.rwB = document.getElementById("b");
+  theDOM.rwEditor = (function () {
+    return (function () {
+      return document.getElementById("editor");
+    });
+  }) ();
+  theDOM.rTextBeingEdited = (function () {
+    return (function () {
+      return document.getElementById("textBeingEdited").value;
+    });
+  }) ();
+  theDOM.rwStartNum = (function () {
+    return (function () {
+      return document.getElementById("startNum");
+    });
+  }) ();
+  theDOM.rwEndNum = (function () {
+    return (function () {
+      return document.getElementById("endNum");
+    });
+  }) ();
+  theDOM.rNewText = (function () {
+    return (function () {
+      return document.getElementById("replaceTo").value;
+    });
+  }) ();
+  theDOM.rwStringToBeReplaced = (function () {
+    return (function () {
+      return document.getElementById("stringToBeReplaced");
+    });
+  }) ();
+  theDOM.rwB = (function () {
+    return (function () {
+      return document.getElementById("b");
+    });
+  }) ();
+}
+  
+function init_variables() {
+  foreach (m in theDOM) {
+    var source = "'" + m.name() + "() = theDOM." + m.name() + "()" + "'";
+    var script = document.createElement("script");
+    script.innerText(source);
+    var bodyTag = document.getElementsByTagName("body");
+    var scriptTags = document.getElementsByTagName("script");
+    bodyTags[0].insertBefore(script, scriptTags[0]);
+  }
 }
 
 function init() {
   loadDOM();
   
-  theDOM.prototype = new Object();
-  
-  theDOM.prototype.copy = (function() {
-    return (function() {
-      copy();
-    });
-  }) ();
+  init_variables();
 
-  theDOM.prototype.setStringToBeReplaced = (function() {
-    return (function() {
-      setStringToBeReplaced(rTextBeingEdited.substring(rwStartNum.value, rwEndNum.value));
-    });
-  }) ();
-  
-  theDOM.prototype.calculateCSS = (function() {
-    return (function() {
-      calculateCSS();
-    });
-  }) ();
-  
-  theDOM.prototype.attachLoadDOM = (function() {
-    return (function() {
-      attachLoadDOM();
-    });
-  }) ();
-  
 } init();
-  
+
 function attachLoadDOM() {
   var element;
   var elementArray;
@@ -123,21 +138,19 @@ function attachLoadDOM() {
   for (var i = 0; i < elementArray.length; i++) {
     element = elementArray[i];
     
-    var obj;
-    obj = theDOM;
-    
-    var onchangeold = eval(element.onchange.valueOf().toString());
+    if (element.onchange != NULL) {
+      continue;
+    }
     
     var onchange_;
     
     if (element.id == "textBeingEdited") {
       onchange_ = (function() {
         return (function() {
-          onchangeold();
           loadDOM();
-          obj.copy();
-          obj.setSrtingToBeReplaced();
-          obj.calculateCSS();
+          copy();
+          setSrtingToBeReplaced();
+          calculateCSS();
         });
       }) ();
     }
